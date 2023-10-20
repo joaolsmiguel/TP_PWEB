@@ -1,0 +1,50 @@
+﻿@model System.Collections.Generic.List<TP_PWEB2.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Clientes: </h1>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Categoria Ativa</th>
+                <th>Nome Categoria</th>
+                <th>Numero Alojamentos</th>
+            </tr>
+        </thead>
+            
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @if (item.Ativo == true){
+                        <p>✅</p>
+                        <a asp-action="Categoria" asp-route-id="@item.CategoriaId" >Desativar</a>
+                    }else{
+                        <p>❌</p>
+                        <a asp-action="Categoria" asp-route-id="@item.CategoriaId">Ativar</a>
+                    }
+                </td>
+                <td>
+                    <p>@item.nome</p>
+                </td>
+                <td>
+                    <p>@item.alojamentos.Count</p>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-action="Cria_Categoria">Cria Categoria</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

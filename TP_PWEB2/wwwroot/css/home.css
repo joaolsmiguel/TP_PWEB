@@ -1,0 +1,76 @@
+header{
+    background:#f1e4b68c !important;
+}
+
+footer{
+    background:#f1e4b68c !important;
+}
+
+.texto h1 {
+    position: absolute;
+    text-align: center;
+    top: 23%;
+    left: 20%;
+    font-family: 'Century Gothic';
+    font-size: 60px;
+    color: black;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+
+.texto2{
+    margin-top:50px;
+}
+.texto2 p {
+    text-align: center;
+    font-family: 'Century Gothic';
+    font-size: 30px;
+    color: black;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.texto h3 {
+    position: absolute;
+    text-align: center;
+    top: 30%;
+    left: 20%;
+    font-family: 'Century Gothic';
+    font-size: 45px;
+    color: black;
+}
+
+@media(max-width: 500px) {
+    .texto h3 {
+        font-size: 30px;
+    }
+}
+
+@media(max-width: 500px) {
+    .texto h1 {
+        font-size: 30px;
+    }
+}
+
+
+.home{
+    opacity:0.4;
+    background-image: url(https://wallpapers.net/web/wallpapers/maldives-hotel-room-hd-wallpaper/5120x2160.jpg);
+    margin-left: -280px;
+    margin-right: -280px;
+    border-bottom: 5px solid #539193;
+    background-size: cover;
+    background-position: center center;
+    margin-top: -16px;
+    height: 500px;
+}
+.home img{
+      
+   max-height:100%;
+   max-width:100%;
+
+}
+.home .texto{
+
+}

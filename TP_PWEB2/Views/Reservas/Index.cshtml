@@ -1,0 +1,150 @@
+﻿@model IEnumerable<TP_PWEB2.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string data_check_in;
+    string data_check_out;
+}
+
+<h1>Reservas</h1>
+
+@if(Model.Count() > 0){
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alojamento)
+                </th>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.check_in)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.check_out)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+        if (item.check_in.Month < 10){
+            if (item.check_in.Date.Day < 10){
+                data_check_in = item.check_in.Date.Year + "-0" + item.check_in.Date.Month + "-0" + item.check_in.Date.Day;
+            }else{
+                data_check_in = item.check_in.Date.Year + "-0" + item.check_in.Date.Month + "-" + item.check_in.Date.Day;
+            }
+        }
+        else{
+            if (item.check_in.Date.Day < 10){
+                data_check_in = item.check_in.Date.Year + "-" + item.check_in.Date.Month + "-0" + item.check_in.Date.Day;
+            }else{
+                data_check_in = item.check_in.Date.Year + "-" + item.check_in.Date.Month + "-" + item.check_in.Date.Day;
+            }
+        }
+
+
+        if (item.check_out.Month < 10){
+            if (item.check_out.Date.Day < 10){
+                data_check_out = item.check_out.Date.Year + "-0" + item.check_out.Date.Month + "-0" + item.check_out.Date.Day;
+            }else{
+                data_check_out = item.check_out.Date.Year + "-0" + item.check_out.Date.Month + "-" + item.check_out.Date.Day;
+            }
+        }
+        else{
+            if (item.check_out.Date.Day < 10){
+                data_check_out = item.check_out.Date.Year + "-" + item.check_out.Date.Month + "-0" + item.check_out.Date.Day;
+            }else{
+                data_check_out = item.check_out.Date.Year + "-" + item.check_out.Date.Month + "-" + item.check_out.Date.Day;
+            }
+        }
+            <tr>
+                <td>
+                    <a >
+                        <img width="225vh" height="auto" src="/imagens_alojamento/@item.Alojamento.imagens.ToList()[0].path">
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alojamento.titulo)
+                </td>
+
+                <td>
+                    
+                    <input type="date" value="@data_check_in" disabled />
+                </td>
+                <td>
+                    <input type="date" value="@data_check_out" disabled />
+                </td>
+                <td>
+                    @if (User.IsInRole("Funcionario"))
+                    {
+                        @if (item.Reserva_Confirmada)
+                        {
+                            <p>Confirmado: ✅</p>
+                        }
+                        else
+                        {
+                            <p>Confirmado: ❌</p>
+                        }
+
+                        @if (item.Entregue)
+                        {
+                            <p>Entregue: ✅</p>
+                        }
+                        else
+                        {
+                            <p>Entregue: ❌</p>
+                        }
+
+                        @if (item.Recebida)
+                        {
+                            <p>Recebida: ✅</p>
+                        }
+                        else
+                        {
+                            <p>Recebida: ❌</p>
+                        }
+
+                    }
+
+                    <a asp-controller="Alojamentos" asp-action="Details" asp-route-id="@item.AlojamentoId">Detalhes Alojamento</a>
+                    <br />
+                    @if (User.IsInRole("Cliente") || User.IsInRole("Gestor"))
+                    {
+                        @if (item.avaliacaoId == null)
+                        {
+                            <a asp-controller="Avaliacoes" asp-action="Edit" asp-route-id="@item.ReservaId">Avaliar</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Avaliacoes" asp-action="Edit" asp-route-id="@item.avaliacaoId">Avaliar</a>
+                        }
+                    }
+                    else if (User.IsInRole("Funcionario")){
+                        <a asp-controller="Reservas" asp-action="Details" asp-route-id="@item.ReservaId">Detalhes Reserva</a>
+                        <br />
+
+                        @if (item.Reserva_Confirmada == true) {
+                            @if (item.Entregue != true)
+                            {
+                                <a asp-controller="Reservas" asp-action="Entrega_Alojamento" asp-route-id="@item.ReservaId">Entrega Alojamento</a>
+                            }
+
+                            @if (item.Recebida != true && item.Entregue == true)
+                            {
+                                <a asp-controller="Reservas" asp-action="Recebe_Alojamento" asp-route-id="@item.ReservaId">Recebe Alojamento</a>
+                            }
+                        }
+                    }
+
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+
+}else{
+    <h1>Ainda não efetuou reservas</h1>
+}

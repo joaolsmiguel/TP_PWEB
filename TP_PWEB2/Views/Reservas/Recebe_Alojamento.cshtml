@@ -1,0 +1,46 @@
+﻿@model TP_PWEB2.Controllers.ReservasController.InputModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Receber Alojamento</h1>
+
+<h3>check List:</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Verificar: </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Cat_Check_List != null)
+        {
+            @foreach (var item in Model.Cat_Check_List)
+            {
+                <tr>
+                    <td>
+                        @item.Check.texto
+                        <input type="checkbox" value="Confirmado" />
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<form asp-action="Recebe_Alojamento" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="imagem" class="control-label"></label>
+        <input asp-for="imagem" class="form-control-file" multiple />
+        <span asp-validation-for="imagem" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

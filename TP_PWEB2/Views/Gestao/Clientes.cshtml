@@ -1,0 +1,49 @@
+﻿@model System.Collections.Generic.List<TP_PWEB2.Data.AppUser>
+
+@{
+    ViewData["Title"] = "Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Clientes: </h1>
+
+<div>
+    <table class="table">
+@{
+/*
+    <thead>
+            <tr>
+                <th>Username</th>
+                <td>Ativar / Desativar</td>
+                <td>Password</td>
+                <td></td>
+            </tr>
+        </thead>
+*/
+}
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <p>@item.UserName</p>
+                    </td>
+                    <td>
+                        @if (item.EmailConfirmed == true){
+                            <a asp-route-id="@item.Id">Desativar Conta</a>
+                        }else{
+                            <a asp-route-id="@item.Id">Ativar Conta</a>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit_User" asp-route-id="@item.Id">Editar Dados</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

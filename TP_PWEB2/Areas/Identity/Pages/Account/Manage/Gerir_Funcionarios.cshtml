@@ -1,0 +1,55 @@
+﻿@page
+
+@model TP_PWEB2.Areas.Identity.Pages.Account.Manage.Gerir_FuncionariosModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Conta Ativa
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Utilizadores)
+            {
+                <tr>
+                    <td>
+                        @if (item.EmailConfirmed == true){
+                            <p>✅</p>
+                        }else{
+                            <p>❌</p>
+                        }
+                    </td>
+                    <td>
+                        <p>@item.UserName</p>
+                    </td>
+                    <td>
+                        <p>@item.Email</p>
+                    </td>
+                    <td>
+                        <a asp-page="ChangePassword" asp-route-id="@item.Id">mudar pass</a>
+                        
+                    </td>
+                    <td>
+                        <a asp-route-id="@item.Id">Ativas/Desativar conta</a>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<TP_PWEB2.Models.Alojamento>
+@using Microsoft.AspNetCore.Identity
+@using TP_PWEB2.Data
+@inject SignInManager<AppUser> SignInManager
+
+@{
+    ViewData["Title"] = "Alojamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Alojamentos</h1>
+
+
+<table class="table">
+    <tbody>
+    <thead>
+        @if (User.IsInRole("Gestor")){
+            <th>Pode receber clientes</th>
+        }
+        <th>Detalhes Alojamento</th>
+        <th></th>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (User.IsInRole("Gestor"))
+                {
+                    <td>
+                        @{
+                            var este_user = await SignInManager.UserManager.FindByNameAsync(User.Identity.Name);
+
+                            @if (item.DonoId == este_user.Id)
+                            {
+                                @if (item.pode_ser_alugado == true)
+                                {
+                                    <p>✅</p>
+                                }
+                                else
+                                {
+                                    <p>❌</p>
+                                }
+
+                                <a asp-route-id="@item.AlojamentoId">Ativar / Desativar</a>
+                            }
+                            else
+                            {
+                                <p>Não és o Dono</p>
+                            }
+                        }
+                    </td>
+                }
+
+                <td>
+                    <div class="container1">
+                        <div class="imagem">
+                            <img width="225vh" height="auto" src="/imagens_alojamento/@item.imagens.ToList()[0].path">
+                        </div>
+
+                        <div class="descricao">
+                            @Html.DisplayFor(modelItem => item.descricao)
+                        </div>
+
+                        <div class="preco">
+                            @Html.DisplayFor(modelItem => item.preco)€
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.AlojamentoId">Detalhes</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+    @if ((User.IsInRole("Gestor") == true) && User.Identity.IsAuthenticated)
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }

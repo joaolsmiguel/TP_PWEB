@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TP_PWEB2.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Avaliações";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Avaliações</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Avaliação
+            </th>
+            <th>
+                Avaliação Cliente
+            </th>
+            <th>
+                Avaliação Gestor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AvaliacaoId">
+                    @Html.DisplayFor(modelItem => item.AvaliacaoId)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avaliacao_do_cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avalicacao_do_gestor)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

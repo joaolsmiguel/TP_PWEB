@@ -1,0 +1,45 @@
+﻿@model TP_PWEB2.Models.Avaliacao
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Avaliacao</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AvaliacaoId" />
+            @if (User.IsInRole("Cliente"))
+            {
+                <div class="form-group">
+                    <label class="control-label">Avaliação</label>
+                    <input asp-for="avaliacao_do_cliente" class="form-control" />
+                    <span asp-validation-for="avaliacao_do_cliente" class="text-danger"></span>
+                </div>
+            }
+            else if (User.IsInRole("Gestor"))
+            {
+                <div class="form-group">
+                    <label class="control-label">Avaliação</label>
+                    <input asp-for="avalicacao_do_gestor" class="form-control" />
+                    <span asp-validation-for="avalicacao_do_gestor" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

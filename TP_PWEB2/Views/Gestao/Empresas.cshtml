@@ -1,0 +1,38 @@
+﻿@model System.Collections.Generic.List<TP_PWEB2.Data.AppUser>
+
+@{
+    ViewData["Title"] = "Empresas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Username</th>
+                <th>nº Alojamentos</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <p>@item.Empresa</p>
+                    </td>
+                    <td>
+                        <p>@item.UserName</p>
+                    </td>
+                    <td>@item.Alojamentos.Count()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

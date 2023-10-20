@@ -1,0 +1,42 @@
+﻿@model TP_PWEB2.Controllers.ReservasController.InputModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Entrega Alojamento</h1>
+
+<h3>check List:</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Verificar: </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Cat_Check_List != null)
+        {
+            @foreach (var item in Model.Cat_Check_List)
+            {
+                <tr>
+                    <td>
+                        @item.Check.texto
+                        <input type="checkbox" value="Confirmado" />
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<input onclick="alerta()" type="submit" value="Entregar" />
+
+<script>
+    function alerta() {
+        alert(" Alojamento foi entregue ao Cliente.");
+        window.location.href = "../";
+    }
+</script>
